@@ -16,7 +16,7 @@ export default function AddEmployeeForm() {
     if (newEmployee) {
       alert("Employee added successfully!");
       reset();
-      navigate("/");
+      navigate("/employee-list");
     } else {
       alert("Failed to add employee.");
     }

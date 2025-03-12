@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import { getEmployeeList } from "../../../services/hrServices";
+import { deleteEmployee, getEmployeeList } from "../../services/hrServices";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const AddEmployee = () => {
   const [employees, setEmployees] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getList() {
@@ -17,7 +18,15 @@ const Home = () => {
     }
 
     getList();
-  }, []);
+  }, [employees]);
+
+  const handleDelete = async (id) => {
+    try {
+      const employee = await deleteEmployee(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -51,7 +60,12 @@ const Home = () => {
                 <td>{emp.designation}</td>
                 <td>
                   <button className="btn btn-warning btn-sm mx-1">Edit</button>
-                  <button className="btn btn-danger btn-sm">Delete</button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(emp._id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))
@@ -68,4 +82,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AddEmployee;

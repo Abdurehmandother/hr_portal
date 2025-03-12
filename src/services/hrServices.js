@@ -25,3 +25,32 @@ export const addEmployee = async (employeeData) => {
     return null;
   }
 };
+
+export const deleteEmployee = async (id) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:5000/api/hr/deleteEmployee/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error deleting employee:",
+      error.response?.data || error.message
+    );
+    return null;
+  }
+};
+
+export const loginUser = async (email, password) => {
+  try {
+    const response = await axios.post("http://localhost:5000/api/hr/login", {
+      email,
+      password,
+    });
+
+    console.log("Login Successful:", response.data);
+    // navigate(`/employee/${response.data.employeeId}`);
+  } catch (error) {
+    console.error("Login Failed:", error.response.data);
+  }
+};
