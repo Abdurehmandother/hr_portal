@@ -3,7 +3,7 @@ import axios from "axios";
 export const getEmployeeList = async () => {
   try {
     const list = await axios.get("http://localhost:5000/api/hr/employeeList");
-    return list.data;
+    return list.data.employes;
   } catch (error) {
     console.log(error);
     return null;

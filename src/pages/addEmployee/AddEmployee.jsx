@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
   const [employees, setEmployees] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getList() {
@@ -59,7 +58,6 @@ const AddEmployee = () => {
                 <td>{emp.email}</td>
                 <td>{emp.designation}</td>
                 <td>
-                  <button className="btn btn-warning btn-sm mx-1">Edit</button>
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(emp._id)}
