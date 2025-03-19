@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getEmployeeData } from "../../services/employeeServices";
 
-const LoginPage = () => {
+const LoginPage = ({ setUserRole }) => {
   const {
     register,
     handleSubmit,
@@ -15,9 +14,28 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       const response = await getEmployeeData(data);
-      localStorage.setItem("employeeId", response.data.employeeId);
-      alert("Login successful!");
-      navigate("/dashboard"); // Redirect to dashboard or homepage
+
+      // ✅ Check correct success key
+      if (response.data) {
+        console.log('asd asdasds asda')
+        const employeeData = response.data.employee;
+
+        // ✅ Store data in localStorage
+        localStorage.setItem("employee", JSON.stringify(employeeData));
+        localStorage.setItem("userRole", employeeData.role);
+
+        // ✅ Update the user role state in App.js
+        setUserRole(employeeData.role);
+
+        // ✅ Redirect based on role
+        if (employeeData.role === "employee") {
+          navigate(`/employee/${employeeData._id}`);
+        } else {
+          navigate("/");
+        }
+      } else {
+        alert("Invalid email or password");
+      }
     } catch (error) {
       alert("Invalid email or password");
     }

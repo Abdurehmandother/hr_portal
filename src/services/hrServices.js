@@ -49,8 +49,30 @@ export const loginUser = async (email, password) => {
     });
 
     console.log("Login Successful:", response.data);
-    // navigate(`/employee/${response.data.employeeId}`);
   } catch (error) {
     console.error("Login Failed:", error.response.data);
+  }
+};
+
+export const applicationList = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:5000/api/hr/leaveApplications"
+    );
+    return response;
+  } catch (error) {
+    console.error("error");
+  }
+};
+
+export const updateApplicationStatus = async (id, status) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:5000/api/hr//change-application-status/${id}`,
+      { status }
+    );
+    return response;
+  } catch (error) {
+    console.error("error");
   }
 };
